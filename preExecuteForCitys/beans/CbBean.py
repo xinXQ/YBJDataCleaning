@@ -9,9 +9,9 @@ PSN_TYPE,INSU_TYPE,BEGN_YM,EXPI_YM,EMP_NO,EMP_NAME,CIS_REA
 """
 from datetime import date
 
-from preExecuteForCitys.beans.Field import Field
-from preExecuteForCitys.check.CheckFuncs import res, pd, isIdCard
-from preExecuteForCitys.utils.CheckByFieldName import cbRole
+from beans.Field import Field
+from check.CheckFuncs import res, pd, isIdCard
+from utils.CheckByFieldName import cbRole
 
 
 class CbBeanFieldsLenErr(Exception):

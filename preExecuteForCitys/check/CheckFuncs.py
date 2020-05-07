@@ -2,9 +2,9 @@
 import re
 from datetime import date
 
-from preExecuteForCitys.beans.Field import Field
-from preExecuteForCitys.utils.DictParse import DictParse
-from preExecuteForCitys.utils.IDCheck import IDCheck
+from beans.Field import Field
+from utils.DictParse import DictParse
+from utils.IDCheck import IDCheck
 
 pd = DictParse()
 res = pd.areaMatching()

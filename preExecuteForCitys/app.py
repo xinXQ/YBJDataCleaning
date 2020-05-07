@@ -1,9 +1,12 @@
+import getopt
 import os
-import sys, getopt
-
-from preExecuteForCitys.beans.BiBean import BiBean, BiBeanFieldsLenErr
-from preExecuteForCitys.beans.CbBean import CbBean
-from preExecuteForCitys.utils.filesutils import classifyFiles, FileUtil
+import sys
+#
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))#存放c.py所在的绝对路径
+# sys.path.append(BASE_DIR)
+from beans.BiBean import BiBean, BiBeanFieldsLenErr
+from beans.CbBean import CbBean
+from utils.filesutils import classifyFiles, FileUtil
 
 
 def parsePara(argv):
@@ -44,7 +47,7 @@ def executeJc(inputFile, outputFile):
                 else:
                     fe.write(bb.toLine(False))
             except BiBeanFieldsLenErr as e:
-                fe.write(line.strip()+"~字段数量不对\n")
+                fe.write(line.strip() + "~字段数量不对\n")
                 continue
 
 
@@ -72,8 +75,6 @@ def executeCb(inputFile, outputFile):
 
 
 if __name__ == "__main__":
-    # inputFile, outputFile = parsePara(sys.argv[1:])
-    executeJc("E:/pyworkspaces/YBJ/preExecuteForCitys/testData/",
-              "E:/pyworkspaces/YBJ/preExecuteForCitys/out/")
-    executeCb("E:/pyworkspaces/YBJ/preExecuteForCitys/testData/",
-              "E:/pyworkspaces/YBJ/preExecuteForCitys/out/")
+    inputFile, outputFile = parsePara(sys.argv[1:])
+    executeJc(inputFile, outputFile)
+    executeCb(inputFile, outputFile)

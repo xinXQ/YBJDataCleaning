@@ -5,11 +5,10 @@
 POOLAREA,PSN_NO,NAME,GEND,CERT_TYPE,CERT_NO,BRDY,NATY,NAT_REGN_CODE,SURV_STAS
 医保区划编码,人员编号,姓名,性别,证件类型,证件号码,出生日期,民族,国家和地区代码,生存状态
 """
-import time
 
-from preExecuteForCitys.beans.Field import Field
-from preExecuteForCitys.check.CheckFuncs import isIdCard, checkId
-from preExecuteForCitys.utils.CheckByFieldName import biRole
+from beans.Field import Field
+from check.CheckFuncs import isIdCard, checkId
+from utils.CheckByFieldName import biRole
 
 
 class BiBeanFieldsLenErr(Exception):

@@ -3,7 +3,7 @@
 """
 根据名字判断需要执行哪些验证
 """
-from preExecuteForCitys.check.CheckFuncs import checkIsNone, checkInDic, checkChar, checkId, checkDate, checkcisrea, \
+from check.CheckFuncs import checkIsNone, checkInDic, checkChar, checkId, checkDate, checkcisrea, \
     checkDateVail, checkDateVailEm
 
 biRole = {"POOLAREA": [checkIsNone, checkInDic],
