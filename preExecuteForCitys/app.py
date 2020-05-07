@@ -31,6 +31,7 @@ def parsePara(argv):
 def executeJc(inputFile, outputFile):
     files = classifyFiles(inputFile, lambda x: x.__contains__("jcxx"))
     fu = FileUtil(outputFile)
+    count = 0
     for file in files:
         rl = []
         el = []
@@ -40,6 +41,7 @@ def executeJc(inputFile, outputFile):
         fw = open(fus.filePath, 'a', encoding='utf-8')
         fe = open(fus.errPath, 'a', encoding='utf-8')
         for line in fr:
+            count += 1
             fields = line.strip().split("~")
             try:
                 bb = BiBean(fields)
@@ -51,6 +53,8 @@ def executeJc(inputFile, outputFile):
             except BiBeanFieldsLenErr as e:
                 el.append(line.strip() + "~字段数量不对\n")
                 continue
+            if count % 10000 == 0:
+                print(file, count)
         fw.writelines(rl)
         fe.writelines(el)
         fw.close()
@@ -60,6 +64,7 @@ def executeJc(inputFile, outputFile):
 def executeCb(inputFile, outputFile):
     files = classifyFiles(inputFile, lambda x: x.__contains__("cbxx"))
     fu = FileUtil(outputFile)
+    count = 0
     for file in files:
         rl = []
         el = []
@@ -69,6 +74,7 @@ def executeCb(inputFile, outputFile):
         fw = open(fus.filePath, 'a', encoding='utf-8')
         fe = open(fus.errPath, 'a', encoding='utf-8')
         for line in fr:
+            count += 1
             fields = line.strip().split("~")
             try:
                 bb = CbBean(fields)
@@ -80,6 +86,8 @@ def executeCb(inputFile, outputFile):
             except BiBeanFieldsLenErr as e:
                 el.append(line.strip() + "~字段数量不对\n")
                 continue
+            if count % 10000 == 0:
+                print(file, count)
         fw.writelines(rl)
         fe.writelines(el)
         fw.close()
