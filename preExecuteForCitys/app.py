@@ -8,6 +8,8 @@ from beans.BiBean import BiBean, BiBeanFieldsLenErr
 from beans.CbBean import CbBean
 from utils.filesutils import classifyFiles, FileUtil
 
+from beans.CbBean import CbBeanFieldsLenErr
+
 
 def parsePara(argv):
     inputfile = ''
@@ -55,6 +57,10 @@ def executeJc(inputFile, outputFile):
                 continue
             if count % 10000 == 0:
                 print(file, count)
+                fw.writelines(rl)
+                rl = []
+                fe.writelines(el)
+                el = []
         fw.writelines(rl)
         fe.writelines(el)
         fw.close()
@@ -83,11 +89,15 @@ def executeCb(inputFile, outputFile):
                     rl.append(bb.toLine())
                 else:
                     el.append(bb.toLine(False))
-            except BiBeanFieldsLenErr as e:
+            except CbBeanFieldsLenErr as e:
                 el.append(line.strip() + "~字段数量不对\n")
                 continue
             if count % 10000 == 0:
                 print(file, count)
+                fw.writelines(rl)
+                rl = []
+                fe.writelines(el)
+                el = []
         fw.writelines(rl)
         fe.writelines(el)
         fw.close()
