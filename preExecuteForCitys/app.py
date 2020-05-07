@@ -32,6 +32,8 @@ def executeJc(inputFile, outputFile):
     files = classifyFiles(inputFile, lambda x: x.__contains__("jcxx"))
     fu = FileUtil(outputFile)
     for file in files:
+        rl = []
+        el = []
         fus = fu.getWriteFilePath(file, "out", "err-{}".format(os.path.basename(file)))
         fr = open(file, 'r', encoding='utf-8', errors='ignore')
         print(fus.errPath, fus.filePath)
@@ -43,18 +45,24 @@ def executeJc(inputFile, outputFile):
                 bb = BiBean(fields)
                 stat = bb.check()
                 if stat:
-                    fw.write(bb.toLine())
+                    rl.append(bb.toLine())
                 else:
-                    fe.write(bb.toLine(False))
+                    el.append(bb.toLine(False))
             except BiBeanFieldsLenErr as e:
-                fe.write(line.strip() + "~字段数量不对\n")
+                el.append(line.strip() + "~字段数量不对\n")
                 continue
+        fw.writelines(rl)
+        fe.writelines(el)
+        fw.close()
+        fe.close()
 
 
 def executeCb(inputFile, outputFile):
     files = classifyFiles(inputFile, lambda x: x.__contains__("cbxx"))
     fu = FileUtil(outputFile)
     for file in files:
+        rl = []
+        el = []
         fus = fu.getWriteFilePath(file, "out", "err-{}".format(os.path.basename(file)))
         fr = open(file, 'r', encoding='utf-8', errors='ignore')
         print(fus.errPath, fus.filePath)
@@ -66,12 +74,16 @@ def executeCb(inputFile, outputFile):
                 bb = CbBean(fields)
                 stat = bb.check()
                 if stat:
-                    fw.write(bb.toLine())
+                    rl.append(bb.toLine())
                 else:
-                    fe.write(bb.toLine(False))
+                    el.append(bb.toLine(False))
             except BiBeanFieldsLenErr as e:
-                fe.write(line.strip() + "~字段数量不对\n")
+                el.append(line.strip() + "~字段数量不对\n")
                 continue
+        fw.writelines(rl)
+        fe.writelines(el)
+        fw.close()
+        fe.close()
 
 
 if __name__ == "__main__":
