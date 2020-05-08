@@ -99,7 +99,6 @@ class CbBean:
     若当前处于正常参保且正常缴费状态时,参保职工(险种)的截止年月必须为空
     其余状态 缴费起始年月必须小于等于缴费截止年月
     """
-
     def checkYm(self):
         ins = self.fileds["INSU_STAS"]
         pcs = self.fileds["PSN_CLCT_STAS"]
@@ -129,9 +128,7 @@ class CbBean:
         # 1,当证件类型为居民身份证（户口簿）时，证件号码必须为18位,并且必须符合身份证校验规则，包括性别、出生日期和校验位。
         # 2,当证件号码为合法身份证时，证件类型必须为居民身份证（户口簿）。
         a = isIdCard(cn)
-        f1 = "01" == ct.value if a else False
-        f2 = a if "01" == ct.value else cn.stat
-        return f1 and f2
+        return (a and "01" == ct.value) or (not a and "01" != ct.value)
 
     # 获取这个bean的最终结果
     def check(self):

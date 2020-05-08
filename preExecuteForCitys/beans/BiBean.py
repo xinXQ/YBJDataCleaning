@@ -49,9 +49,7 @@ class BiBean:
         # 1,当证件类型为居民身份证（户口簿）时，证件号码必须为18位,并且必须符合身份证校验规则，包括性别、出生日期和校验位。
         # 2,当证件号码为合法身份证时，证件类型必须为居民身份证（户口簿）。
         a = isIdCard(cn)
-        f1 = "01" == ct.value if a else False
-        f2 = a if "01" == ct.value else cn.stat
-        return f1 and f2
+        return (a and "01" == ct.value) or (not a and "01" != ct.value)
 
     # 将每个field根据规范进行检查
     def checkAllFields(self):
