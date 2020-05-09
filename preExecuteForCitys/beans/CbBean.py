@@ -98,28 +98,32 @@ class CbBean:
     """
     若当前处于正常参保且正常缴费状态时,参保职工(险种)的截止年月必须为空
     其余状态 缴费起始年月必须小于等于缴费截止年月
+    
+    若当前处于正常参保且正常缴费状态时，参保职工的截止年月必须为空，
+    参保居民的截止日期必须大于等于缴费开始年月；
+    若当前处于终止参保或暂停缴费状态，则必须上传截止年月，截止年月为最后实际缴费年月
     """
     def checkYm(self):
         ins = self.fileds["INSU_STAS"]
         pcs = self.fileds["PSN_CLCT_STAS"]
         by = self.fileds["BEGN_YM"]
         ey = self.fileds["EXPI_YM"]
-        it = self.fileds["INSU_TYPE"]
+        pt = self.fileds["PSN_TYPE"]
         assert isinstance(ins, Field)
         assert isinstance(pcs, Field)
         assert isinstance(by, Field)
         assert isinstance(ey, Field)
-        assert isinstance(it, Field)
-        if ins.value == "1" and pcs.value == "1" and it.value == "11":
+        assert isinstance(pt, Field)
+        if ins.value == "1" and pcs.value == "1" and (pt.value == "11" or pt.value == "10" or pt.value == "12"):
             return ey.value is None or "" == ey.value
-        if it.value == "31" and "" == ey.value:
-            return True
-        try:
-            byd = date(int(by.value[:4]), int(by.value[4:6]), 1)
-            eyd = date(int(ey.value[:4]), int(ey.value[4:6]), 1)
-            return byd <= eyd
-        except Exception as e:
-            return False
+        if pt.value == "21" or ins.value == "4" or pcs.value == "2":
+            try:
+                byd = date(int(by.value[:4]), int(by.value[4:6]), 1)
+                eyd = date(int(ey.value[:4]), int(ey.value[4:6]), 1)
+                return byd <= eyd
+            except Exception as e:
+                return False
+        return True
 
     # 基础信息表的内部关联检查 !!
     def idCardCheck(self):
