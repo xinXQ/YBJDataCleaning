@@ -33,7 +33,7 @@ def parsePara(argv):
     return inputfile, outputfile, encoding
 
 
-def executeJc(inputFile, outputFile, encoding="utf-8"):
+def executeJc(inputFile, outputFile,version, encoding="utf-8"):
     files = classifyFiles(inputFile, lambda x: x.__contains__("jcxx"))
     fu = FileUtil(outputFile)
     count = 0
@@ -59,7 +59,7 @@ def executeJc(inputFile, outputFile, encoding="utf-8"):
                 el.append(line.strip() + "~字段数量不对\n")
                 continue
             if count % 10000 == 0:
-                print(file, count)
+                print(file, count, "version= "+version)
                 fw.writelines(rl)
                 rl = []
                 fe.writelines(el)
@@ -70,7 +70,7 @@ def executeJc(inputFile, outputFile, encoding="utf-8"):
         fe.close()
 
 
-def executeCb(inputFile, outputFile, encoding="utf-8"):
+def executeCb(inputFile, outputFile, version, encoding="utf-8"):
     files = classifyFiles(inputFile, lambda x: x.__contains__("cbxx"))
     fu = FileUtil(outputFile)
     count = 0
@@ -96,7 +96,7 @@ def executeCb(inputFile, outputFile, encoding="utf-8"):
                 el.append(line.strip() + "~字段数量不对\n")
                 continue
             if count % 10000 == 0:
-                print(file, count)
+                print(file, count, "version= "+version)
                 fw.writelines(rl)
                 rl = []
                 fe.writelines(el)
@@ -108,6 +108,7 @@ def executeCb(inputFile, outputFile, encoding="utf-8"):
 
 
 if __name__ == "__main__":
+    version = "1.0"
     inputFile, outputFile, encoding = parsePara(sys.argv[1:])
-    executeJc(inputFile, outputFile, encoding)
-    executeCb(inputFile, outputFile, encoding)
+    executeJc(inputFile, outputFile, version, encoding)
+    executeCb(inputFile, outputFile, version, encoding)
