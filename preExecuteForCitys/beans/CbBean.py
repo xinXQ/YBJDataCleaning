@@ -112,6 +112,8 @@ class CbBean:
         assert isinstance(it, Field)
         if ins.value == "1" and pcs.value == "1" and it.value == "11":
             return ey.value is None or "" == ey.value
+        if it.value == "31" and "" == ey.value:
+            return True
         try:
             byd = date(int(by.value[:4]), int(by.value[4:6]), 1)
             eyd = date(int(ey.value[:4]), int(ey.value[4:6]), 1)
