@@ -33,5 +33,5 @@ cbRole = {"ADMDVS": [checkIsNone, checkInDic],
           "EXPI_YM": [checkDateVailEm],
           "EMP_NO": [checkIsNone],
           "EMP_NAME": [checkIsNone],
-          "CIS_REA": [checkcisrea]
+          "CIS_REA": [checkIsNone, checkInDic]
           }
