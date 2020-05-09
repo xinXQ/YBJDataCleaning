@@ -14,8 +14,9 @@ from beans.CbBean import CbBeanFieldsLenErr
 def parsePara(argv):
     inputfile = ''
     outputfile = ''
+    encoding = "utf-8"
     try:
-        opts, args = getopt.getopt(argv, "hi:o:", ["ifile=", "ofile="])
+        opts, args = getopt.getopt(argv, "hi:o:e:", ["ifile=", "ofile=", "encoding="])
     except getopt.GetoptError:
         print("python3", __file__, ' -i <inputfile> -o <outputfile>')
         sys.exit(2)
@@ -27,10 +28,12 @@ def parsePara(argv):
             inputfile = arg
         elif opt in ("-o", "--ofile"):
             outputfile = arg
-    return inputfile, outputfile
+        elif opt in ("-e", "--encoding"):
+            encoding = arg
+    return inputfile, outputfile, encoding
 
 
-def executeJc(inputFile, outputFile):
+def executeJc(inputFile, outputFile, encoding="utf-8"):
     files = classifyFiles(inputFile, lambda x: x.__contains__("jcxx"))
     fu = FileUtil(outputFile)
     count = 0
@@ -38,10 +41,10 @@ def executeJc(inputFile, outputFile):
         rl = []
         el = []
         fus = fu.getWriteFilePath(file, "out", "err-{}".format(os.path.basename(file)))
-        fr = open(file, 'r', encoding='utf-8', errors='ignore')
+        fr = open(file, 'r', encoding=encoding, errors='ignore')
         print(fus.errPath, fus.filePath)
-        fw = open(fus.filePath, 'a', encoding='utf-8')
-        fe = open(fus.errPath, 'a', encoding='utf-8')
+        fw = open(fus.filePath, 'a', encoding="utf-8")
+        fe = open(fus.errPath, 'a', encoding="utf-8")
         for line in fr:
             count += 1
             fields = line.strip().split("~")
@@ -67,7 +70,7 @@ def executeJc(inputFile, outputFile):
         fe.close()
 
 
-def executeCb(inputFile, outputFile):
+def executeCb(inputFile, outputFile, encoding="utf-8"):
     files = classifyFiles(inputFile, lambda x: x.__contains__("cbxx"))
     fu = FileUtil(outputFile)
     count = 0
@@ -75,7 +78,7 @@ def executeCb(inputFile, outputFile):
         rl = []
         el = []
         fus = fu.getWriteFilePath(file, "out", "err-{}".format(os.path.basename(file)))
-        fr = open(file, 'r', encoding='utf-8', errors='ignore')
+        fr = open(file, 'r', encoding=encoding, errors='ignore')
         print(fus.errPath, fus.filePath)
         fw = open(fus.filePath, 'a', encoding='utf-8')
         fe = open(fus.errPath, 'a', encoding='utf-8')
@@ -105,6 +108,6 @@ def executeCb(inputFile, outputFile):
 
 
 if __name__ == "__main__":
-    inputFile, outputFile = parsePara(sys.argv[1:])
-    executeJc(inputFile, outputFile)
-    executeCb(inputFile, outputFile)
+    inputFile, outputFile, encoding = parsePara(sys.argv[1:])
+    executeJc(inputFile, outputFile, encoding)
+    executeCb(inputFile, outputFile, encoding)
