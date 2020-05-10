@@ -44,7 +44,9 @@ def executeJc(inputFile, outputFile,version, encoding="utf-8"):
         fr = open(file, 'r', encoding=encoding, errors='ignore')
         print(fus.errPath, fus.filePath)
         fw = open(fus.filePath, 'a', encoding="utf-8")
+        fw.write(version+"\n")
         fe = open(fus.errPath, 'a', encoding="utf-8")
+        fe.write(version+"\n")
         for line in fr:
             count += 1
             fields = line.strip().split("~")
@@ -81,7 +83,9 @@ def executeCb(inputFile, outputFile, version, encoding="utf-8"):
         fr = open(file, 'r', encoding=encoding, errors='ignore')
         print(fus.errPath, fus.filePath)
         fw = open(fus.filePath, 'a', encoding='utf-8')
+        fw.write(version+"\n")
         fe = open(fus.errPath, 'a', encoding='utf-8')
+        fe.write(version+"\n")
         for line in fr:
             count += 1
             fields = line.strip().split("~")
@@ -108,7 +112,7 @@ def executeCb(inputFile, outputFile, version, encoding="utf-8"):
 
 
 if __name__ == "__main__":
-    version = "1.0"
+    version = "2.0"
     print("当前脚本版本为:"+version,"务必保持和公告一致")
     inputFile, outputFile, encoding = parsePara(sys.argv[1:])
     executeJc(inputFile, outputFile, version, encoding)
