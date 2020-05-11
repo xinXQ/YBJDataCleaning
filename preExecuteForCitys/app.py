@@ -112,7 +112,7 @@ def executeCb(inputFile, outputFile, version, encoding="utf-8"):
 
 
 if __name__ == "__main__":
-    version = "2.0"
+    version = "3.0"
     print("当前脚本版本为:"+version,"务必保持和公告一致")
     inputFile, outputFile, encoding = parsePara(sys.argv[1:])
     executeJc(inputFile, outputFile, version, encoding)
